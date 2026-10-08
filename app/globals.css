@@ -138,7 +138,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   color: #fff;
 }
 .button-ghost:hover { background: rgb(255 255 255 / .15); }
-.header-portal { display: none; }
 
 .hero-section {
   position: relative;
@@ -360,7 +359,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .footer-link:hover { color: #fff; }
 
 @media (min-width: 640px) { .page-shell { width: min(100% - 4rem, 1240px); } }
-@media (min-width: 1280px) { .header-portal { display: inline-flex; } }
 @media (max-width: 767px) {
   .verse-wrap { height: 500px; min-height: 0; }
   .org-connector { height: 45px; }

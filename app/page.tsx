@@ -164,13 +164,6 @@ export default function Home() {
             ))}
           </nav>
 
-          <ExternalLink
-            href={links.schedule}
-            className="button button-light header-portal"
-          >
-            Portal Petugas <ArrowUpRight size={17} aria-hidden="true" />
-          </ExternalLink>
-
           <button
             type="button"
             className="grid h-11 w-11 place-items-center rounded-2xl border border-white/25 xl:hidden"
@@ -199,12 +192,6 @@ export default function Home() {
                   {item.label}
                 </a>
               ))}
-              <ExternalLink
-                href={links.schedule}
-                className="button button-light mt-3 justify-center"
-              >
-                Portal Petugas <ArrowUpRight size={17} aria-hidden="true" />
-              </ExternalLink>
             </div>
           </nav>
         )}
