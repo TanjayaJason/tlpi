@@ -14,6 +14,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 const links = {
@@ -112,10 +113,27 @@ function ExternalLink({
   );
 }
 
-function LogoMark() {
+function BrandLogos({ large = false }: { large?: boolean }) {
   return (
-    <span className="logo-mark" aria-hidden="true">
-      <Cross size={19} strokeWidth={2.2} />
+    <span className={`brand-logos ${large ? "brand-logos-large" : ""}`} aria-hidden="true">
+      <span className="brand-logo brand-logo-paroki">
+        <Image
+          src="/logo-paroki-mangga-besar.png"
+          alt=""
+          width={468}
+          height={442}
+          priority
+        />
+      </span>
+      <span className="brand-logo brand-logo-liturgi">
+        <Image
+          src="/logo-seksi-liturgi.png"
+          alt=""
+          width={1080}
+          height={1080}
+          priority
+        />
+      </span>
     </span>
   );
 }
@@ -132,7 +150,7 @@ export default function Home() {
             className="flex shrink-0 items-center gap-3"
             aria-label="TLPI Bidang 4, kembali ke beranda"
           >
-            <LogoMark />
+            <BrandLogos />
             <span className="leading-tight">
               <span className="block text-base font-extrabold tracking-tight">TLPI Bidang 4</span>
               <span className="block text-[11px] font-bold uppercase tracking-[0.15em] text-[#bac5ff]">
@@ -364,7 +382,7 @@ export default function Home() {
       <footer className="footer">
         <div className="page-shell grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_1fr]">
           <div>
-            <div className="flex items-center gap-3"><LogoMark /><div><p className="text-base font-extrabold">TLPI Bidang 4</p><p className="text-xs font-bold uppercase tracking-[.15em] text-[#b8c2ff]">Tata Laksana Perayaan dan Ibadat</p></div></div>
+            <div className="flex items-center gap-4"><BrandLogos large /><div><p className="text-base font-extrabold">TLPI Bidang 4</p><p className="text-xs font-bold uppercase tracking-[.15em] text-[#b8c2ff]">Tata Laksana Perayaan dan Ibadat</p></div></div>
             <p className="mt-6 max-w-sm text-sm leading-7 text-[#c3c9e4]">
               Melayani bersama agar perayaan liturgi menjadi ruang perjumpaan yang benar, indah, hidup dan memerdekakan.
             </p>
