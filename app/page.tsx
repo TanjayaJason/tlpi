@@ -14,7 +14,6 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 
 const links = {
@@ -117,21 +116,19 @@ function BrandLogos({ large = false }: { large?: boolean }) {
   return (
     <span className={`brand-logos ${large ? "brand-logos-large" : ""}`} aria-hidden="true">
       <span className="brand-logo brand-logo-paroki">
-        <Image
+        <img
           src="/logo-paroki-mangga-besar.png"
           alt=""
           width={468}
           height={442}
-          priority
         />
       </span>
       <span className="brand-logo brand-logo-liturgi">
-        <Image
+        <img
           src="/logo-seksi-liturgi.png"
           alt=""
           width={1080}
           height={1080}
-          priority
         />
       </span>
     </span>
