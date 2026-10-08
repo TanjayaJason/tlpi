@@ -5,8 +5,8 @@ import {
   BookOpenText,
   CalendarDays,
   ChevronDown,
-  Church,
   Cross,
+  FileText,
   MapPin,
   Menu,
   Music2,
@@ -54,7 +54,7 @@ const teams = [
   },
   {
     number: "03",
-    icon: BookOpenText,
+    icon: FileText,
     title: "Misa dan Ibadat Khusus",
     people: ["Lim Valencia Salvina Philicia Teana", "Bridgia Livia Marcella"],
     accent: "coral",
@@ -75,17 +75,17 @@ const services = [
     number: "02",
     icon: UsersRound,
     title: "Tata Gerak Liturgi",
-    text: "Panduan sikap tubuh, alur prosesi, dan pelayanan misdinar, lektor, pemandu, serta petugas lainnya.",
+    text: "Panduan sikap tubuh, alur prosesi, serta pelayanan misdinar dan lektor. Tim juga mendampingi latihan dan gladi resik agar perayaan berjalan tertib.",
     action: "Baca panduan",
     href: links.gerak,
     accent: "blue",
   },
   {
     number: "03",
-    icon: BookOpenText,
+    icon: FileText,
     title: "Misa & Ibadat Khusus",
-    text: "Teks dan tata perayaan untuk masa liturgi, sakramen, perayaan khusus, serta ibadat arwah.",
-    action: "Buka layanan",
+    text: "Mengelola surat kebutuhan acara khusus dalam Misa dan ibadat khusus, agar persiapan pelayanan terkoordinasi dengan baik.",
+    action: "Buka layanan surat",
     href: links.khusus,
     accent: "coral",
   },
@@ -139,7 +139,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f7f7fc] text-[#1c2146]">
+    <main className="min-h-screen overflow-x-hidden bg-[#faf8f4] text-[#1c2146]">
       <header className="site-header">
         <div className="page-shell flex h-[76px] items-center justify-between gap-5">
           <a
@@ -211,8 +211,6 @@ export default function Home() {
       </header>
 
       <section id="beranda" className="hero-section">
-        <div className="hero-orbit hero-orbit-one" aria-hidden="true" />
-        <div className="hero-orbit hero-orbit-two" aria-hidden="true" />
         <div className="page-shell relative z-10 grid items-center gap-12 py-20 pt-36 lg:min-h-[760px] lg:grid-cols-[1.12fr_.88fr] lg:gap-16 lg:py-24 lg:pt-32">
           <div className="max-w-[760px]">
             <div className="eyebrow"><Sparkles size={15} aria-hidden="true" /> RUANG KERJA PELAYAN LITURGI</div>
@@ -235,11 +233,16 @@ export default function Home() {
           </div>
 
           <div className="verse-wrap">
-            <div className="verse-halo" aria-hidden="true" />
+            <img
+              className="hero-art-image"
+              src="/liturgical-still-life.png"
+              alt="Lilin menyala di samping Kitab Suci dan lembar partitur"
+              width={1536}
+              height={1024}
+            />
             <div className="verse-card">
-              <div className="verse-symbol"><Cross size={31} strokeWidth={1.7} aria-hidden="true" /></div>
               <span className="verse-label">SPIRITUS SERVITII</span>
-              <blockquote className="mt-6 font-serif text-[clamp(2rem,3.4vw,3.45rem)] font-medium italic leading-[1.06] tracking-tight">
+              <blockquote className="mt-3 font-serif text-[clamp(1.65rem,2.5vw,2.6rem)] font-medium italic leading-[1.06] tracking-tight">
                 Sollicitudine non pigri<br />
                 Spiritu Ferventes<br />
                 Domino Servientes
@@ -247,7 +250,7 @@ export default function Home() {
               <div className="verse-bottom">
                 <span>Rome 12:11</span>
                 <span className="h-px flex-1 bg-white/25" />
-                <Church size={22} strokeWidth={1.5} aria-hidden="true" />
+                <BookOpenText size={20} strokeWidth={1.5} aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -271,7 +274,7 @@ export default function Home() {
               <div className="leader-icon"><Cross size={24} strokeWidth={1.7} aria-hidden="true" /></div>
               <div>
                 <span className="card-eyebrow">WAKIL KETUA BIDANG 4</span>
-                <h3>Anthony Edward<br className="hidden sm:block" /> Tanjaya Jason Winata</h3>
+                <h3 className="person-name">Anthony Edward Tanjaya Jason Winata</h3>
                 <p>Bagian Tata Laksana, Perayaan, dan Ibadat</p>
               </div>
               <span className="leader-sparkle" aria-hidden="true">✦</span>
@@ -298,7 +301,7 @@ export default function Home() {
                       <p className="card-eyebrow">STAF</p>
                       <ul className="mt-3 space-y-3">
                         {team.people.map((person) => (
-                          <li key={person} className="flex gap-2.5 text-[.95rem] font-semibold leading-snug">
+                          <li key={person} className="person-name flex gap-2.5">
                             <span className="mt-[.48rem] h-1.5 w-1.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
                             {person}
                           </li>
