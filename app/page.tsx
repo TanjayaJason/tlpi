@@ -1,75 +1,451 @@
 "use client";
 
-import { ArrowUpRight, BookOpenText, CalendarDays, CheckCircle2, ChevronRight, Church, Clock3, Cross, Mail, MapPin, Menu, Music2, ScrollText, Sparkles, UsersRound, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpenText,
+  CalendarDays,
+  ChevronDown,
+  Church,
+  Cross,
+  MapPin,
+  Menu,
+  Music2,
+  Sparkles,
+  UsersRound,
+  X,
+} from "lucide-react";
 import { useState } from "react";
+
+const links = {
+  schedule:
+    "https://docs.google.com/spreadsheets/d/11TU2H5wtPWMKeM8kd-RSBw4cUgySFzmoUt0X94SodHQ/edit?usp=sharing",
+  musica:
+    "https://drive.google.com/drive/folders/1XIHt00IqzJQ_kDdlvgD7UxA8QqV77T-x?usp=sharing",
+  gerak:
+    "https://drive.google.com/file/d/1j1VIz6QUoOGYHFTlVNAwNENk_nx6C2Yy/view?usp=sharing",
+  khusus: "https://surat-liturgi.vercel.app/",
+  calendar2026:
+    "https://docs.google.com/spreadsheets/d/1amU6jiGZHzg1GXElsSHhtAtc7_c366NA/edit?usp=sharing&ouid=111785717314206636419&rtpof=true&sd=true",
+  calendar2027:
+    "https://docs.google.com/spreadsheets/d/1hGakUMf1Be8ViLWT9PzcD3JgJGh5XWGy/edit?usp=sharing&ouid=111785717314206636419&rtpof=true&sd=true",
+};
 
 const navItems = [
   { label: "Beranda", href: "#beranda" },
   { label: "Tentang Kami", href: "#tentang" },
   { label: "Pilar Layanan", href: "#layanan" },
+  { label: "Kalender Liturgi", href: "#kalender" },
   { label: "Informasi Internal", href: "#informasi" },
 ];
 
-const values = [
-  { icon: CheckCircle2, title: "Ketertiban Liturgi", text: "Setiap petugas, ritus, dan tata perayaan berjalan selaras dengan pedoman Gereja." },
-  { icon: Music2, title: "Keanggunan Musik", text: "Musik liturgi membantu umat berdoa, menyatu, dan menghayati misteri iman." },
-  { icon: Sparkles, title: "Kesucian Suasana Ibadat", text: "Ruang, gerak, dan pelayanan dirawat agar menghadirkan suasana doa yang khidmat." },
+const teams = [
+  {
+    number: "01",
+    icon: Music2,
+    title: "Musica Liturgia",
+    people: ["Alfonsus Yosef Gabriel Syamsudin"],
+    accent: "violet",
+  },
+  {
+    number: "02",
+    icon: UsersRound,
+    title: "Tata Gerak Liturgi",
+    people: ["Bonifasius Maxien Mario", "Vinsensius Calvine Jonathan"],
+    accent: "blue",
+  },
+  {
+    number: "03",
+    icon: BookOpenText,
+    title: "Misa dan Ibadat Khusus",
+    people: ["Lim Valencia Salvina Philicia Teana", "Bridgia Livia Marcella"],
+    accent: "coral",
+  },
 ];
 
 const services = [
-  { number: "01", icon: Music2, title: "Musica Liturgia", text: "Pengelolaan partitur, katalog lagu liturgi, dan panduan pelayanan bagi organis, pemazmur, serta tim koor.", button: "Akses dokumen", href: "#informasi", active: true },
-  { number: "02", icon: UsersRound, title: "Tata Gerak Liturgi", text: "Panduan sikap tubuh, alur prosesi, serta pedoman tugas misdinar, lektor, pemandu, dan pelayan komuni.", button: "Akses panduan", href: "#informasi", active: true },
-  { number: "03", icon: BookOpenText, title: "Misa & Ibadat Khusus", text: "Teks dan tata perayaan khusus untuk Natal, Pekan Suci, penerimaan Sakramen, pemberkatan, dan ibadat arwah.", button: "Segera hadir", href: "#layanan", active: false },
+  {
+    number: "01",
+    icon: Music2,
+    title: "Musica Liturgia",
+    text: "Partitur, katalog lagu liturgi, serta materi pendampingan untuk organis, pemazmur, dan tim koor.",
+    action: "Buka folder musik",
+    href: links.musica,
+    accent: "violet",
+  },
+  {
+    number: "02",
+    icon: UsersRound,
+    title: "Tata Gerak Liturgi",
+    text: "Panduan sikap tubuh, alur prosesi, dan pelayanan misdinar, lektor, pemandu, serta petugas lainnya.",
+    action: "Baca panduan",
+    href: links.gerak,
+    accent: "blue",
+  },
+  {
+    number: "03",
+    icon: BookOpenText,
+    title: "Misa & Ibadat Khusus",
+    text: "Teks dan tata perayaan untuk masa liturgi, sakramen, perayaan khusus, serta ibadat arwah.",
+    action: "Buka layanan",
+    href: links.khusus,
+    accent: "coral",
+  },
 ];
 
 const notices = [
-  { day: "12", month: "OKT", tag: "Koordinasi", title: "Briefing Petugas Misa Hari Minggu", text: "Seluruh lektor, pemazmur, misdinar, dan petugas tata laksana hadir 30 menit sebelum Misa.", time: "06.30 WIB" },
-  { day: "18", month: "OKT", tag: "Musica Liturgia", title: "Latihan Gabungan Koor Lingkungan", text: "Persiapan lagu-lagu untuk Perayaan Ekaristi Hari Minggu Misi Sedunia di aula paroki.", time: "19.00 WIB" },
-  { day: "25", month: "OKT", tag: "Formasi", title: "Pembekalan Lektor & Pemazmur", text: "Pendalaman spiritualitas pelayanan sabda dan latihan teknis pembacaan di gereja utama.", time: "09.00 WIB" },
+  {
+    label: "01 / PENUGASAN",
+    title: "Cek jadwal sebelum bertugas",
+    text: "Pastikan waktu pelayanan dan pembagian tugas melalui jadwal petugas terbaru.",
+    href: links.schedule,
+    action: "Lihat jadwal",
+  },
+  {
+    label: "02 / PERSIAPAN",
+    title: "Siapkan materi musik liturgi",
+    text: "Tim koor dan pemazmur dapat mengakses partitur serta materi pendukung dalam folder bersama.",
+    href: links.musica,
+    action: "Buka folder",
+  },
+  {
+    label: "03 / PANDUAN",
+    title: "Selaraskan tata gerak pelayanan",
+    text: "Gunakan panduan yang sama untuk membantu setiap prosesi berlangsung tertib dan khidmat.",
+    href: links.gerak,
+    action: "Baca panduan",
+  },
 ];
 
+function ExternalLink({
+  href,
+  children,
+  className = "",
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      {children}
+    </a>
+  );
+}
+
 function LogoMark() {
-  return <span className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-t-full rounded-b-xl border border-[#d6b76e]/45 bg-[#102b45] text-[#e6c97d] shadow-[inset_0_0_18px_rgba(230,201,125,.08)]"><Cross size={20} strokeWidth={1.7} aria-hidden="true" /></span>;
+  return (
+    <span className="logo-mark" aria-hidden="true">
+      <Cross size={19} strokeWidth={2.2} />
+    </span>
+  );
 }
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f8f6f0] text-[#16283a]">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0b2238]/95 text-white backdrop-blur-xl">
-        <div className="page-shell flex h-20 items-center justify-between">
-          <a href="#beranda" className="flex items-center gap-3" aria-label="TLPI Bidang 4, kembali ke beranda"><LogoMark /><div className="leading-none"><span className="block font-serif text-[1.05rem] font-semibold tracking-wide">TLPI Bidang 4</span><span className="mt-1.5 block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[#d6b76e]">Seksi Liturgi</span></div></a>
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Navigasi utama">{navItems.map((item) => <a key={item.href} href={item.href} className="nav-link">{item.label}</a>)}</nav>
-          <div className="hidden lg:block"><a href="#informasi" className="button-gold"><UsersRound size={17} aria-hidden="true" />Portal Petugas</a></div>
-          <button type="button" className="grid h-11 w-11 place-items-center rounded-xl border border-white/15 lg:hidden" onClick={() => setMenuOpen((value) => !value)} aria-expanded={menuOpen} aria-controls="mobile-menu" aria-label={menuOpen ? "Tutup menu" : "Buka menu"}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
+    <main className="min-h-screen overflow-x-hidden bg-[#f7f7fc] text-[#1c2146]">
+      <header className="site-header">
+        <div className="page-shell flex h-[76px] items-center justify-between gap-5">
+          <a
+            href="#beranda"
+            className="flex shrink-0 items-center gap-3"
+            aria-label="TLPI Bidang 4, kembali ke beranda"
+          >
+            <LogoMark />
+            <span className="leading-tight">
+              <span className="block text-base font-extrabold tracking-tight">TLPI Bidang 4</span>
+              <span className="block text-[11px] font-bold uppercase tracking-[0.15em] text-[#bac5ff]">
+                Seksi Liturgi
+              </span>
+            </span>
+          </a>
+
+          <nav className="hidden items-center gap-6 xl:flex" aria-label="Navigasi utama">
+            {navItems.map((item) => (
+              <a key={item.href} href={item.href} className="nav-link">
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <ExternalLink
+            href={links.schedule}
+            className="button button-light header-portal"
+          >
+            Portal Petugas <ArrowUpRight size={17} aria-hidden="true" />
+          </ExternalLink>
+
+          <button
+            type="button"
+            className="grid h-11 w-11 place-items-center rounded-2xl border border-white/25 xl:hidden"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
-        {menuOpen && <nav id="mobile-menu" className="border-t border-white/10 bg-[#0b2238] px-5 py-5 lg:hidden" aria-label="Navigasi seluler"><div className="mx-auto flex max-w-7xl flex-col gap-1">{navItems.map((item) => <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white">{item.label}</a>)}<a href="#informasi" onClick={() => setMenuOpen(false)} className="button-gold mt-3 justify-center"><UsersRound size={17} aria-hidden="true" /> Portal Petugas</a></div></nav>}
+        {menuOpen && (
+          <nav
+            id="mobile-menu"
+            className="border-t border-white/15 bg-[#171b45] px-5 pb-5 pt-3 xl:hidden"
+            aria-label="Navigasi seluler"
+          >
+            <div className="mx-auto flex max-w-7xl flex-col gap-1">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl px-4 py-3 text-sm font-semibold text-white/85 hover:bg-white/10"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <ExternalLink
+                href={links.schedule}
+                className="button button-light mt-3 justify-center"
+              >
+                Portal Petugas <ArrowUpRight size={17} aria-hidden="true" />
+              </ExternalLink>
+            </div>
+          </nav>
+        )}
       </header>
 
-      <section id="beranda" className="relative isolate min-h-[750px] overflow-hidden bg-[#0b2238] pb-20 pt-32 text-white sm:pt-40 lg:min-h-[790px] lg:pb-28 lg:pt-48">
-        <div className="hero-grid absolute inset-0 -z-20 opacity-30" />
-        <div className="absolute -right-32 top-24 -z-10 h-[560px] w-[560px] rounded-full border border-[#d6b76e]/15 sm:right-[-80px]" />
-        <div className="absolute -right-16 top-40 -z-10 h-[440px] w-[440px] rounded-full border border-[#d6b76e]/10 sm:right-[-18px]" />
-        <div className="absolute bottom-0 right-[-50px] -z-10 hidden h-[560px] w-[430px] rounded-t-full border border-[#d6b76e]/25 bg-[#0e2a44]/70 xl:block"><div className="absolute inset-x-16 bottom-0 top-24 rounded-t-full border border-[#d6b76e]/30" /><Cross className="absolute left-1/2 top-28 -translate-x-1/2 text-[#d6b76e]/70" size={64} strokeWidth={1} /></div>
-        <div className="page-shell grid items-center gap-14 lg:grid-cols-[minmax(0,1.18fr)_minmax(320px,.62fr)]">
-          <div className="max-w-4xl"><div className="eyebrow-light"><span /> Selamat datang di pusat layanan liturgi</div><h1 className="mt-6 max-w-[920px] font-serif text-[clamp(2.65rem,6vw,5.35rem)] font-medium leading-[1.02] tracking-[-0.035em]">Pusat Informasi &amp; Manajemen <em className="font-normal text-[#e3c575]">Tata Laksana</em> Perayaan dan Ibadat</h1><p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">Mewujudkan perayaan liturgi yang benar, indah, hidup dan memerdekakan.</p><div className="mt-10 flex flex-col gap-3 sm:flex-row"><a href="#layanan" className="button-gold justify-center sm:justify-start">Eksplorasi Layanan <ChevronRight size={17} aria-hidden="true" /></a><a href="#informasi" className="button-outline justify-center sm:justify-start"><CalendarDays size={17} aria-hidden="true" /> Jadwal Petugas</a></div></div>
-          <div className="relative mx-auto w-full max-w-md lg:mt-14"><div className="rounded-t-[10rem] border border-[#d6b76e]/35 bg-white/[0.055] px-7 pb-8 pt-24 backdrop-blur-sm sm:px-9 sm:pt-28"><Church className="absolute left-1/2 top-9 -translate-x-1/2 text-[#d6b76e]" size={40} strokeWidth={1.2} aria-hidden="true" /><p className="font-serif text-2xl leading-snug text-white">“Hendaklah segala sesuatu berlangsung dengan sopan dan teratur.”</p><div className="mt-6 h-px w-12 bg-[#d6b76e]" /><p className="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-[#d6b76e]">1 Korintus 14:40</p></div></div>
+      <section id="beranda" className="hero-section">
+        <div className="hero-orbit hero-orbit-one" aria-hidden="true" />
+        <div className="hero-orbit hero-orbit-two" aria-hidden="true" />
+        <div className="page-shell relative z-10 grid items-center gap-12 py-20 pt-36 lg:min-h-[760px] lg:grid-cols-[1.12fr_.88fr] lg:gap-16 lg:py-24 lg:pt-32">
+          <div className="max-w-[760px]">
+            <div className="eyebrow"><Sparkles size={15} aria-hidden="true" /> RUANG KERJA PELAYAN LITURGI</div>
+            <h1 className="mt-7 max-w-[820px] font-serif text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[.95] tracking-[-.055em]">
+              Liturgi yang <span className="hero-highlight">hidup.</span> Pelayanan yang sepenuh hati.
+            </h1>
+            <p className="mt-7 max-w-xl text-base leading-8 text-[#e1e5ff] sm:text-lg">
+              Pusat informasi &amp; manajemen Tata Laksana Perayaan dan Ibadat.
+              Mewujudkan perayaan liturgi yang benar, indah, hidup dan memerdekakan.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <a href="#layanan" className="button button-primary justify-center">
+                Eksplorasi Layanan <ChevronDown size={17} aria-hidden="true" />
+              </a>
+              <ExternalLink href={links.schedule} className="button button-ghost justify-center">
+                <CalendarDays size={18} aria-hidden="true" /> Jadwal Petugas
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </ExternalLink>
+            </div>
+          </div>
+
+          <div className="verse-wrap">
+            <div className="verse-halo" aria-hidden="true" />
+            <div className="verse-card">
+              <div className="verse-symbol"><Cross size={31} strokeWidth={1.7} aria-hidden="true" /></div>
+              <span className="verse-label">SPIRITUS SERVITII</span>
+              <blockquote className="mt-6 font-serif text-[clamp(2rem,3.4vw,3.45rem)] font-medium italic leading-[1.06] tracking-tight">
+                Sollicitudine non pigri<br />
+                Spiritu Ferventes<br />
+                Domino Servientes
+              </blockquote>
+              <div className="verse-bottom">
+                <span>Rome 12:11</span>
+                <span className="h-px flex-1 bg-white/25" />
+                <Church size={22} strokeWidth={1.5} aria-hidden="true" />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="page-shell mt-16 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.18em] text-white/45 lg:mt-20"><span className="h-px w-10 bg-[#d6b76e]/60" /> Melayani dengan tertib, anggun, dan penuh hormat</div>
+        <div className="hero-bottom" aria-hidden="true" />
       </section>
 
-      <section id="tentang" className="scroll-mt-20 py-20 sm:py-28"><div className="page-shell"><div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20"><div><div className="eyebrow-dark"><span /> Tentang kami</div><h2 className="section-title mt-5">Melayani altar,<br /><em>menyertai umat.</em></h2></div><div className="max-w-3xl lg:pt-3"><p className="text-xl leading-9 text-[#2e4050] sm:text-2xl sm:leading-10">Seksi Liturgi Bidang 4 TLPI hadir untuk menata, mendampingi, dan mengembangkan seluruh pelayanan perayaan iman di paroki.</p><p className="mt-5 leading-7 text-slate-600">Bersama para imam, pengurus lingkungan, koor, lektor, pemazmur, misdinar, serta seluruh petugas liturgi, kami memastikan setiap perayaan menjadi ruang perjumpaan yang tertib, hangat, dan sungguh membantu umat berdoa.</p></div></div>
-        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-[#d8d2c4] bg-[#d8d2c4] md:grid-cols-3">{values.map((value) => { const Icon = value.icon; return <article key={value.title} className="group bg-[#fffdf8] p-7 transition-colors hover:bg-white sm:p-9"><div className="flex items-center justify-between"><span className="grid h-12 w-12 place-items-center rounded-full bg-[#102b45] text-[#e0c374]"><Icon size={22} strokeWidth={1.7} aria-hidden="true" /></span><span className="font-serif text-2xl text-[#d6b76e]/60">✦</span></div><h3 className="mt-7 font-serif text-2xl font-semibold text-[#102b45]">{value.title}</h3><p className="mt-3 leading-7 text-slate-600">{value.text}</p></article>; })}</div></div></section>
+      <section id="tentang" className="section-space scroll-mt-20">
+        <div className="page-shell">
+          <div className="section-intro">
+            <span className="section-kicker">01 / TENTANG KAMI</span>
+            <h2 className="section-heading">Wajah di balik <em>pelayanan.</em></h2>
+            <p>
+              Bidang 4 menyiapkan pelayanan liturgi bersama. Satu koordinasi,
+              tiga subdivisi yang berjalan setara dalam merawat perayaan iman.
+            </p>
+          </div>
 
-      <section id="layanan" className="scroll-mt-20 bg-[#e9edf0] py-20 sm:py-28"><div className="page-shell"><div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><div className="eyebrow-dark"><span /> Pilar utama</div><h2 className="section-title mt-5">Tiga poros pelayanan<br /><em>liturgi paroki.</em></h2></div><p className="max-w-md leading-7 text-slate-600">Sumber daya praktis untuk membantu setiap pelayan mempersiapkan tugas dengan jelas dan penuh penghayatan.</p></div>
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">{services.map((service) => { const Icon = service.icon; return <article key={service.title} className="service-card group"><div className="flex items-start justify-between"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-[#102b45] text-[#e0c374] transition-transform duration-300 group-hover:-translate-y-1"><Icon size={26} strokeWidth={1.5} aria-hidden="true" /></span><span className="font-serif text-4xl text-[#102b45]/12">{service.number}</span></div><h3 className="mt-10 font-serif text-[1.7rem] font-semibold text-[#102b45]">{service.title}</h3><p className="mt-4 min-h-[112px] leading-7 text-slate-600">{service.text}</p><a href={service.href} aria-disabled={!service.active} className={service.active ? "service-link" : "service-link cursor-default opacity-50"}>{service.button} {service.active && <ArrowUpRight size={17} aria-hidden="true" />}</a></article>; })}</div></div></section>
+          <div className="org-chart mt-12 sm:mt-16">
+            <article className="leader-card">
+              <div className="leader-icon"><Cross size={24} strokeWidth={1.7} aria-hidden="true" /></div>
+              <div>
+                <span className="card-eyebrow">WAKIL KETUA BIDANG 4</span>
+                <h3>Anthony Edward<br className="hidden sm:block" /> Tanjaya Jason Winata</h3>
+                <p>Bagian Tata Laksana, Perayaan, dan Ibadat</p>
+              </div>
+              <span className="leader-sparkle" aria-hidden="true">✦</span>
+            </article>
 
-      <section id="informasi" className="scroll-mt-20 bg-[#102b45] py-20 text-white sm:py-28"><div className="page-shell"><div className="grid gap-10 lg:grid-cols-[.58fr_1.42fr] lg:gap-16"><div><div className="eyebrow-light"><span /> Papan informasi</div><h2 className="mt-5 font-serif text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Tetap terhubung dengan pelayanan.</h2><p className="mt-5 max-w-md leading-7 text-slate-300">Informasi singkat untuk koordinasi petugas, latihan, dan agenda pembinaan liturgi.</p><a href="#footer" className="button-gold mt-8 inline-flex">Lihat semua agenda <ChevronRight size={17} aria-hidden="true" /></a></div>
-        <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.045]">{notices.map((notice, index) => <article key={notice.title} className={`grid gap-5 p-6 sm:grid-cols-[82px_1fr_auto] sm:items-center sm:p-7 ${index !== notices.length - 1 ? "border-b border-white/10" : ""}`}><div className="flex h-[76px] w-[76px] shrink-0 flex-col items-center justify-center rounded-2xl border border-[#d6b76e]/35 bg-[#d6b76e]/10"><span className="font-serif text-3xl leading-none text-[#e3c575]">{notice.day}</span><span className="mt-1 text-[0.68rem] font-bold tracking-[0.16em] text-white/55">{notice.month}</span></div><div><span className="text-xs font-bold uppercase tracking-[0.16em] text-[#d6b76e]">{notice.tag}</span><h3 className="mt-2 font-serif text-xl font-semibold sm:text-[1.35rem]">{notice.title}</h3><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">{notice.text}</p></div><div className="flex items-center gap-2 whitespace-nowrap text-sm font-semibold text-white/70 sm:self-start sm:pt-1"><Clock3 size={15} className="text-[#d6b76e]" aria-hidden="true" /> {notice.time}</div></article>)}</div></div></div></section>
+            <div className="org-connector" aria-hidden="true">
+              <span className="org-stem" />
+              <span className="org-rail" />
+            </div>
 
-      <section className="border-b border-[#d8d2c4] bg-[#fffdf8] py-12"><div className="page-shell flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center"><div className="flex items-center gap-4"><span className="grid h-12 w-12 place-items-center rounded-full bg-[#f2ead7] text-[#9d7932]"><ScrollText size={22} aria-hidden="true" /></span><div><p className="font-serif text-xl font-semibold">Butuh panduan untuk pelayanan?</p><p className="mt-1 text-sm text-slate-500">Hubungi koordinator TLPI untuk arahan dan dokumen terbaru.</p></div></div><a href="mailto:liturgi@parokiteladan.org" className="inline-flex items-center gap-2 text-sm font-bold text-[#102b45] underline decoration-[#d6b76e] decoration-2 underline-offset-8">Hubungi Seksi Liturgi <ArrowUpRight size={16} /></a></div></section>
+            <div className="grid gap-4 md:grid-cols-3 lg:gap-5">
+              {teams.map((team) => {
+                const Icon = team.icon;
+                return (
+                  <article key={team.title} className={`team-card accent-${team.accent}`}>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="team-icon"><Icon size={23} strokeWidth={1.8} aria-hidden="true" /></div>
+                      <span className="team-number">{team.number} / 03</span>
+                    </div>
+                    <h3 className="mt-7 font-serif text-[1.75rem] font-semibold leading-tight">
+                      {team.title}
+                    </h3>
+                    <div className="mt-7 border-t border-current/10 pt-5">
+                      <p className="card-eyebrow">STAF</p>
+                      <ul className="mt-3 space-y-3">
+                        {team.people.map((person) => (
+                          <li key={person} className="flex gap-2.5 text-[.95rem] font-semibold leading-snug">
+                            <span className="mt-[.48rem] h-1.5 w-1.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
+                            {person}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <footer id="footer" className="bg-[#071a2b] py-14 text-white"><div className="page-shell grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_.8fr]"><div className="max-w-md"><div className="flex items-center gap-3"><LogoMark /><div><p className="font-serif text-lg font-semibold">TLPI Bidang 4</p><p className="text-xs uppercase tracking-[0.17em] text-[#d6b76e]">Seksi Liturgi Paroki</p></div></div><p className="mt-6 text-sm leading-7 text-slate-400">Mendukung pelayanan liturgi yang tertib, indah, hidup, dan berakar pada semangat persekutuan umat.</p></div><div><h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[#d6b76e]">Tautan Cepat</h3><div className="mt-5 flex flex-col gap-3 text-sm text-slate-300">{navItems.slice(1).map((item) => <a key={item.href} href={item.href} className="hover:text-white">{item.label}</a>)}</div></div><div><h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[#d6b76e]">Kontak</h3><div className="mt-5 space-y-4 text-sm leading-6 text-slate-300"><p className="flex gap-3"><MapPin size={18} className="mt-0.5 shrink-0 text-[#d6b76e]" /> Sekretariat Paroki<br />Jl. Gereja No. 12, Jakarta</p><a href="mailto:liturgi@parokiteladan.org" className="flex gap-3 hover:text-white"><Mail size={18} className="shrink-0 text-[#d6b76e]" /> liturgi@parokiteladan.org</a></div></div></div><div className="page-shell mt-12 flex flex-col gap-3 border-t border-white/10 pt-7 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between"><p>© 2026 Bidang 4 — Tata Laksana Perayaan dan Ibadat.</p><p>Ad Maiorem Dei Gloriam</p></div></footer>
+      <section id="layanan" className="section-space services-section scroll-mt-20">
+        <div className="page-shell">
+          <div className="section-intro section-intro-light">
+            <span className="section-kicker">02 / PILAR LAYANAN</span>
+            <h2 className="section-heading">Cari yang kamu butuhkan.<br /><em>Siap melayani.</em></h2>
+            <p>Tiga ruang sumber daya untuk mempersiapkan pelayanan dengan jelas, serasi, dan penuh penghayatan.</p>
+          </div>
+          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            {services.map((service) => {
+              const Icon = service.icon;
+              return (
+                <ExternalLink key={service.title} href={service.href} className={`service-card accent-${service.accent}`}>
+                  <div className="flex items-start justify-between">
+                    <span className="service-icon"><Icon size={26} strokeWidth={1.8} aria-hidden="true" /></span>
+                    <span className="team-number">{service.number} / 03</span>
+                  </div>
+                  <h3 className="mt-9 font-serif text-[2rem] font-semibold leading-tight">{service.title}</h3>
+                  <p className="mt-4 leading-7 text-[#555b7a]">{service.text}</p>
+                  <span className="service-action">
+                    {service.action} <ArrowUpRight size={19} aria-hidden="true" />
+                  </span>
+                </ExternalLink>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section id="kalender" className="section-space calendar-section scroll-mt-20">
+        <div className="page-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-16">
+          <div>
+            <span className="section-kicker">03 / KALENDER LITURGI</span>
+            <h2 className="section-heading mt-5">Menjalani tahun<br /><em>bersama Gereja.</em></h2>
+            <p className="mt-5 max-w-lg text-base leading-8 text-[#626784]">
+              Lihat penanggalan liturgi sebagai acuan menyiapkan nyanyian, bacaan,
+              warna liturgi, dan pelayanan setiap perayaan.
+            </p>
+            <div className="mt-7 flex items-center gap-3 text-sm font-semibold text-[#4f5bc6]">
+              <CalendarDays size={18} aria-hidden="true" />
+              Pilih tahun untuk membuka kalender
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              { year: "2026", href: links.calendar2026, index: "01" },
+              { year: "2027", href: links.calendar2027, index: "02" },
+            ].map((item) => (
+              <ExternalLink key={item.year} href={item.href} className="calendar-card group">
+                <span className="flex items-center justify-between text-sm font-bold text-[#676e98]">
+                  KALENDER LITURGI <span>{item.index} / 02</span>
+                </span>
+                <span className="mt-12 block font-serif text-[clamp(4rem,9vw,6.5rem)] font-semibold leading-none tracking-tight">
+                  {item.year}
+                </span>
+                <span className="mt-8 flex items-center justify-between border-t border-[#1c2146]/15 pt-5 text-sm font-bold">
+                  Buka kalender <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </ExternalLink>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="informasi" className="section-space info-section scroll-mt-20">
+        <div className="page-shell">
+          <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
+            <div className="section-intro section-intro-light">
+              <span className="section-kicker">04 / INFORMASI INTERNAL</span>
+              <h2 className="section-heading">Satu langkah lebih <em>siap.</em></h2>
+              <p>Pintu cepat menuju hal-hal yang paling sering dibutuhkan tim liturgi.</p>
+            </div>
+            <ExternalLink href={links.schedule} className="button button-light w-fit">
+              Jadwal Petugas <ArrowUpRight size={17} aria-hidden="true" />
+            </ExternalLink>
+          </div>
+          <div className="mt-11 grid gap-4 lg:grid-cols-3">
+            {notices.map((notice) => (
+              <ExternalLink key={notice.label} href={notice.href} className="notice-card group">
+                <span className="card-eyebrow text-[#b8c2ff]">{notice.label}</span>
+                <h3 className="mt-7 font-serif text-[1.6rem] font-semibold leading-tight">{notice.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-[#d5daf5]">{notice.text}</p>
+                <span className="mt-8 flex items-center gap-2 text-sm font-bold text-white">
+                  {notice.action} <ArrowUpRight size={17} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </ExternalLink>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="page-shell grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_1fr]">
+          <div>
+            <div className="flex items-center gap-3"><LogoMark /><div><p className="text-base font-extrabold">TLPI Bidang 4</p><p className="text-xs font-bold uppercase tracking-[.15em] text-[#b8c2ff]">Tata Laksana Perayaan dan Ibadat</p></div></div>
+            <p className="mt-6 max-w-sm text-sm leading-7 text-[#c3c9e4]">
+              Melayani bersama agar perayaan liturgi menjadi ruang perjumpaan yang benar, indah, hidup dan memerdekakan.
+            </p>
+          </div>
+          <div>
+            <h3 className="footer-heading">Jelajahi</h3>
+            <div className="mt-5 flex flex-col gap-3">
+              {navItems.slice(1).map((item) => (
+                <a key={item.href} href={item.href} className="footer-link">{item.label}</a>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="footer-heading">Alamat Gereja</h3>
+            <div className="mt-5 flex gap-3 text-sm leading-7 text-[#c3c9e4]">
+              <MapPin size={20} className="mt-1 shrink-0 text-[#e9c778]" aria-hidden="true" />
+              <address className="not-italic">
+                Jl. Raya Mangga Besar No.55 1, RT.1/RW.3, Tangki,
+                Kec. Taman Sari, Kota Jakarta Barat,
+                Daerah Khusus Ibukota Jakarta 11170
+              </address>
+            </div>
+          </div>
+        </div>
+        <div className="page-shell mt-12 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-[#9da6d0] sm:flex-row sm:justify-between">
+          <p>© 2026 TLPI Bidang 4. Seluruh hak cipta dilindungi.</p>
+          <p>Ad Maiorem Dei Gloriam</p>
+        </div>
+      </footer>
     </main>
   );
 }
