@@ -357,19 +357,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .calendar-card:hover { transform: translateY(-5px); background: #e9eaff; }
 .calendar-card > span:last-child { margin-top: auto; }
 
-.info-section { background: #171b45; color: #fff; }
-.notice-card {
-  display: flex;
-  min-height: 260px;
-  flex-direction: column;
-  border: 1px solid rgb(255 255 255 / .2);
-  border-radius: 24px;
-  background: rgb(255 255 255 / .06);
-  padding: 1.7rem;
-  transition: transform .2s ease, background-color .2s ease;
-}
-.notice-card:hover { transform: translateY(-4px); background: rgb(255 255 255 / .11); }
-.notice-card > span:last-child { margin-top: auto; }
 .footer { border-top: 1px solid rgb(255 255 255 / .12); background: #101333; padding-block: 4rem 2rem; color: #fff; }
 .footer-heading { color: #f0d38f; font-size: .75rem; font-weight: 850; letter-spacing: .17em; text-transform: uppercase; }
 .footer-link { width: fit-content; color: #c3c9e4; font-size: .875rem; font-weight: 600; transition: color .2s ease; }

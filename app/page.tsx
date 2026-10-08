@@ -35,7 +35,6 @@ const navItems = [
   { label: "Tentang Kami", href: "#tentang" },
   { label: "Pilar Layanan", href: "#layanan" },
   { label: "Kalender Liturgi", href: "#kalender" },
-  { label: "Informasi Internal", href: "#informasi" },
 ];
 
 const teams = [
@@ -89,30 +88,6 @@ const services = [
     action: "Buka layanan",
     href: links.khusus,
     accent: "coral",
-  },
-];
-
-const notices = [
-  {
-    label: "01 / PENUGASAN",
-    title: "Cek jadwal sebelum bertugas",
-    text: "Pastikan waktu pelayanan dan pembagian tugas melalui jadwal petugas terbaru.",
-    href: links.schedule,
-    action: "Lihat jadwal",
-  },
-  {
-    label: "02 / PERSIAPAN",
-    title: "Siapkan materi musik liturgi",
-    text: "Tim koor dan pemazmur dapat mengakses partitur serta materi pendukung dalam folder bersama.",
-    href: links.musica,
-    action: "Buka folder",
-  },
-  {
-    label: "03 / PANDUAN",
-    title: "Selaraskan tata gerak pelayanan",
-    text: "Gunakan panduan yang sama untuk membantu setiap prosesi berlangsung tertib dan khidmat.",
-    href: links.gerak,
-    action: "Baca panduan",
   },
 ];
 
@@ -379,33 +354,6 @@ export default function Home() {
                 </span>
                 <span className="mt-8 flex items-center justify-between border-t border-[#1c2146]/15 pt-5 text-sm font-bold">
                   Buka kalender <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
-                </span>
-              </ExternalLink>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="informasi" className="section-space info-section scroll-mt-20">
-        <div className="page-shell">
-          <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
-            <div className="section-intro section-intro-light">
-              <span className="section-kicker">04 / INFORMASI INTERNAL</span>
-              <h2 className="section-heading">Satu langkah lebih <em>siap.</em></h2>
-              <p>Pintu cepat menuju hal-hal yang paling sering dibutuhkan tim liturgi.</p>
-            </div>
-            <ExternalLink href={links.schedule} className="button button-light w-fit">
-              Jadwal Petugas <ArrowUpRight size={17} aria-hidden="true" />
-            </ExternalLink>
-          </div>
-          <div className="mt-11 grid gap-4 lg:grid-cols-3">
-            {notices.map((notice) => (
-              <ExternalLink key={notice.label} href={notice.href} className="notice-card group">
-                <span className="card-eyebrow text-[#b8c2ff]">{notice.label}</span>
-                <h3 className="mt-7 font-serif text-[1.6rem] font-semibold leading-tight">{notice.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[#d5daf5]">{notice.text}</p>
-                <span className="mt-8 flex items-center gap-2 text-sm font-bold text-white">
-                  {notice.action} <ArrowUpRight size={17} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
                 </span>
               </ExternalLink>
             ))}
